@@ -1,0 +1,9 @@
+[package]
+name = "to-do-list"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+egui = "0.22" # Use the latest version
+eframe = "0.22" # For creating a native app
+winapi = { version = "0.3", features = ["windef", "winuser"] }
