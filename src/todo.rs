@@ -15,19 +15,18 @@ impl TodoList {
         Self { tasks: Vec::new() }
     }
 
-    pub fn add_task(&mut self, title: String) -> usize {
+    pub fn add_task(&mut self, title: &str) -> usize {
         let id = self.tasks.len() + 1;
-        let task = Task {
+        self.tasks.push(Task {
             id,
-            title,
+            title: title.to_string(),
             completed: false,
-        };
-        self.tasks.push(task);
+        });
         id
     }
 
-    pub fn list_tasks(&self) -> Vec<Task> {
-        self.tasks.clone()
+    pub fn list_tasks(&self) -> &[Task] {
+        &self.tasks
     }
 
     pub fn complete_task(&mut self, id: usize) -> Result<(), String> {
@@ -48,6 +47,7 @@ impl TodoList {
         }
     }
 
+    // ✅ Fixed: Add missing `clear_all()` method
     pub fn clear_all(&mut self) {
         self.tasks.clear();
     }

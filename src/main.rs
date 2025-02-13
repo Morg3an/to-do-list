@@ -36,9 +36,7 @@ impl eframe::App for MyApp {
                 ui.text_edit_singleline(&mut self.new_task);
                 if ui.button("Add Task").clicked() {
                     if !self.new_task.trim().is_empty() {
-                        self.todo_list.add_task(
-                            self.new_task.clone(),
-                        );
+                        self.todo_list.add_task(self.new_task.as_str());
                         self.new_task.clear();
                     }
                 }
@@ -46,8 +44,11 @@ impl eframe::App for MyApp {
 
             ui.separator();
 
+            // Collect tasks to avoid immutable & mutable borrow conflict
+            let tasks: Vec<_> = self.todo_list.list_tasks().to_vec();
+
             // Display tasks
-            for task in self.todo_list.list_tasks() {
+            for task in tasks {
                 ui.horizontal(|ui| {
                     ui.label(format!(
                         "{} [{}]",
